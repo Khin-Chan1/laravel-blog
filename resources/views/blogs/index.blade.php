@@ -1,10 +1,8 @@
 <x-layout>
-    {{-- hero section --}}
+    @if (session('success'))
+        <div class="alert alert-success text-center">{{ session('success') }}</div>
+    @endif
     <x-hero />
-
-    <!-- blogs section -->
     <x-blogs-section :blogs="$blogs" />
-
-    <!-- subscribe new blogs -->
     <x-subscribe />
 </x-layout>
