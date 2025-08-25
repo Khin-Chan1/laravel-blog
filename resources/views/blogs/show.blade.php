@@ -1,5 +1,4 @@
 <x-layout>
-    <!-- singloe blog section -->
     <div class="container">
         <div class="row">
             <div class="col-md-6 mx-auto text-center">
@@ -24,8 +23,17 @@
         </div>
     </div>
 
-    <!-- subscribe new blogs -->
-    <x-subscribe />
+    @auth
+        <x-comment-form :blog='$blog' />
+        @if ($blog->comments->count())
+            <x-comments :comments="$blog->comments" />
+        @endif
+    @endauth
 
+    @guest
+        <p class="text-center">Please <a href="/login">login</a> to participate in this discussion.</p>
+    @endguest
+
+    <x-subscribe />
     <x-blog-you-may-like :randomBlogs="$randomBlogs" />
 </x-layout>

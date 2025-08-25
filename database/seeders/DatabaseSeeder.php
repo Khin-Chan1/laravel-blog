@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,15 +14,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::truncate(); //to delete old seeder in database
-        Blog::truncate();
-        Category::truncate();
+        $mgmg = User::factory()->create([
+            'name' => 'Mg Mg',
+            'username' => 'Mg Mg',
+        ]);
+        $aungaung = User::factory()->create([
+            'name' => 'Aung Aung',
+            'username' => 'Aung Aung',
+        ]);
 
-        $mgmg = User::factory()->create(['name' => 'Mg Mg', 'username' => 'Mg Mg']);
-        $aungaung = User::factory()->create(['name' => 'Aung Aung', 'username' => 'Aung Aung']);
-
-        $frontend = Category::factory()->create(['name' => 'frontend', 'slug' => 'frontend']);
-        $backend = Category::factory()->create(['name' => 'backend', 'slug' => 'backend']);
+        $frontend = Category::factory()->create([
+            'name' => 'frontend',
+            'slug' => 'frontend',
+        ]);
+        $backend = Category::factory()->create([
+            'name' => 'backend',
+            'slug' => 'backend',
+        ]);
 
         Blog::factory(2)->create([
             'category_id' => $frontend->id,
