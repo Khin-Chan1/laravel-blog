@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -20,5 +22,16 @@ class BlogController extends Controller
             'blog' => $blog,
             'randomBlogs' => Blog::inRandomOrder()->take(3)->get()
         ]);
+    }
+
+    public function subscriptionHandler(Blog $blog) {
+        $user = Auth::user();
+        //if auth()->user subscribed to blog
+        if(User::find($user->id)->isSubscribed($blog)) {
+            $blog->unSubscribe();
+        } else {
+            $blog->subscribe();
+        }
+        return back();
     }
 }

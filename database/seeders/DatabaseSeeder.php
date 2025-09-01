@@ -32,11 +32,11 @@ class DatabaseSeeder extends Seeder
             'slug' => 'backend',
         ]);
 
-        Blog::factory(2)->create([
+        Blog::factory(6)->create([
             'category_id' => $frontend->id,
             'user_id' => $mgmg->id,
         ]);
-        Blog::factory(2)->create([
+        Blog::factory(6)->create([
             'category_id' => $backend->id,
             'user_id' => $aungaung->id,
         ]);

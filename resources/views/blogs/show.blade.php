@@ -15,6 +15,18 @@
                         </a>
                     </div>
                     <div class="text-secondary">{{ $blog->created_at->diffForHumans() }}</div>
+                    <div class="text-secondary">
+                        <form action="/blogs/{{ $blog->slug }}/subscription" method="POST">
+                            @csrf
+                            @auth
+                                @if (auth()->user()->isSubscribed($blog))
+                                    <button class="btn btn-warning">unsubscribe</button>
+                                @else
+                                    <button class="btn btn-danger">subscribe</button>
+                                @endif
+                            @endauth
+                        </form>
+                    </div>
                 </div>
                 <p class="lh-md mt-3">
                     {{ $blog->body }}
@@ -26,7 +38,7 @@
     @auth
         <x-comment-form :blog='$blog' />
         @if ($blog->comments->count())
-            <x-comments :comments="$blog->comments" />
+            <x-comments :comments="$blog->comments()->latest()->paginate(3)" />
         @endif
     @endauth
 
@@ -34,6 +46,5 @@
         <p class="text-center">Please <a href="/login">login</a> to participate in this discussion.</p>
     @endguest
 
-    <x-subscribe />
     <x-blog-you-may-like :randomBlogs="$randomBlogs" />
 </x-layout>
